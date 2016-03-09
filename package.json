@@ -1,0 +1,40 @@
+{
+  "name": "generator-webpack-spa",
+  "version": "0.0.0",
+  "description": "Webpack driven singe page app",
+  "homepage": "",
+  "author": {
+    "name": "Logan Barnett",
+    "email": "logustus@gmail.com",
+    "url": "http://loganbarnett.github.io"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "case": "^1.4.1",
+    "chalk": "^1.0.0",
+    "yeoman-generator": "^0.21.1",
+    "yosay": "^1.0.2"
+  },
+  "devDependencies": {
+    "yeoman-assert": "^2.0.0",
+    "gulp": "^3.6.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-istanbul": "^0.9.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^2.1.0"
+  },
+  "repository": "LoganBarnett/generator-webpack-spa",
+  "scripts": {
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "MIT"
+}
