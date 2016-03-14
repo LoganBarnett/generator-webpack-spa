@@ -47,6 +47,12 @@ var env = getEnv(process.env.npm_lifecycle_event);
 
 var localCssName = '[name]__[local]___[hash:base64:5]';
 
+var eslint = {
+  test: /\.jsx?$/,
+  loaders: [ 'eslint' ],
+  exclude: /(node_modules)/,
+};
+
 var loaders =
   [ { loader: ExtractTextPlugin.extract(
         'style'
