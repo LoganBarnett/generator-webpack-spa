@@ -42,6 +42,7 @@ var getEnv = function(task) {
   }
 };
 
+/* eslint disable no-process-env */
 var env = getEnv(process.env.npm_lifecycle_event);
 
 var localCssName = '[name]__[local]___[hash:base64:5]';
@@ -56,7 +57,11 @@ var loaders =
   , { test: /\.jsx?$/
     , exclude: /(node_modules)|(\.spec\.jsx?$)|(tests\.webpack\.js)|(sub\.js)/
     , loaders: [
-      , 'babel?optional[]=runtime'
+      'babel?presets[]=es2015&presets[]=react',
+      'flowcheck',
+      // not sure why this must be repeated
+      // necessary so flowcheck doesn't blow up on es6 syntax
+      'babel?presets[]=es2015&presets[]=react',
     ]
   }
   , { test   : /\.woff|\.woff2|\.svg|.eot|\.ttf/
@@ -65,9 +70,9 @@ var loaders =
   }
 ];
 
-var entries =
-  [ 'babel-core/polyfill'
-  , './index'
+var entries = [
+  // 'babel-core/polyfill',
+  './index',
 ];
 
 var plugins =
@@ -92,11 +97,14 @@ var plugins =
 ];
 
 var devtool = null;
+var preLoaders = [];
+var uglifyOpts = { comments: false };
 // apply env-specific changes to the build pipeline
 // order is very important in here, hence the unshifts/splices/etc
 console.log('env is ' + env);
 if(env == 'DEV') {
   devtool = '#eval-sourc-map';
+  preLoaders.push(eslint);
   loaders[1].loaders.unshift('react-hot');
 
   entries.splice(1, 0
@@ -111,6 +119,7 @@ else if(env == 'TEST') {
 }
 else {
   devtool = 'source-map';
+  preLoaders.push(eslint);
   var uglifyOpts = {comments: false};
   // plugins.push(new webpack.optimize.UglifyJsPlugin({output: uglifyOpts}));
   plugins.push(new webpack.optimize.UglifyJsPlugin(uglifyOpts));
@@ -119,7 +128,7 @@ else {
 
 module.exports = {
     devtool: devtool
-  , context: path.join(__dirname, 'client', 'app')
+  , context: path.join(__dirname, 'client')
   , entry: entries
   , output: {
       filename: 'bundle.js'

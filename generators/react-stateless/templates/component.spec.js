@@ -1,8 +1,10 @@
 import React from 'react';
-import ComponentFn from './<%= pascalName %>'
+import ComponentFn from './<%= pascalName %>';
 import {
   renderAndFindOneByDataId,
+  /* eslint-disable no-unused-vars */
   mockComponent,
+  /* eslint-enable no-unused-vars */
 } from '../../react.test.utils';
 import ReactUtils from 'react-addons-test-utils';
 

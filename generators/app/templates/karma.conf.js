@@ -23,77 +23,76 @@ THE SOFTWARE.
 *******************************************************************************/
 'use strict';
 
-webpackConfig.module.loaders.unshift(
-  {test: /\.jsx?$/, exclude: /(node_modules)|(\.spec\.)/, loader: 'isparta'}
-);
-webpackConfig.module.loaders.push(
-  { test: /\.spec\.jsx?$/, exclude: /(node_modules)/, loader: "babel-loader"}
-);
+var webpackConfig = require('./webpack.config');
+webpackConfig.module.preLoaders = webpackConfig.module.preLoaders || [];
+webpackConfig.module.loaders.unshift({
+  test: /\.jsx?$/,
+  exclude: /(node_modules)|(\.spec\.)/,
+  loader: 'isparta',
+});
+webpackConfig.module.loaders.push({
+  test: /\.spec\.jsx?$/,
+  exclude: /(node_modules)/,
+  loaders: ['babel?presets=[]=es2015&presets[]=react', 'eslint'],
+});
 
-webpackConfig.module.postLoaders = webpackConfig.module.postLoaders || [];
-webpackConfig.module.postLoaders.push(
-  // delays coverage til after tests are run,
-  // fixing transpiled source coverage error
-  { test: /\.js$/
-  , exclude: /(\.spec\.js)|(node_modules)|(react\.test\.helpers)/
-  , loader: 'istanbul-instrumenter'
-  }
-);
-
-
+webpackConfig.babel = { presets: ['es2015', 'react']};
+webpackConfig.isparta = {
+  babel: {
+    presets: [ 'es2015', 'react' ]
+  },
+  embedSource: true,
+  noAutoWrap: true,
+};
 
 module.exports = function(config) {
   config.set({
-    basePath: './client/app'
-    , frameworks: ['jasmine']
-    , files:
-      [ '../function_bind_polyfill.js'
-      , '../../node_modules/babel-core/browser-polyfill.js'
-      , '../../tests.webpack.js'
-    ]
-    , exclude: [
+    basePath: './client',
+    frameworks: ['jasmine'],
+    files: [
+      '../../node_modules/babel-polyfill/browser.js',
+      '../../tests.webpack.js',
+    ],
+    exclude: [
 
-    ]
-    , preprocessors: {
-        // '**/*.spec.jsx': ['webpack']
-      // , '**/*.spec.js': ['webpack']
-        '../../tests.webpack.js': ['webpack']
-      , '**/!(*.spec)+(.js)': ['coverage']
-      , '**/!(*.spec)+(.jsx)': ['coverage']
-    }
-    , webpack: webpackConfig
-    , webpackServer: {
+    ],
+    preprocessors: {
+      '../../tests.webpack.js': ['webpack'],
+      '**/!(*.spec)+(.js)': ['coverage'],
+      '**/!(*.spec)+(.jsx)': ['coverage'],
+    },
+    webpack: webpackConfig,
+    webpackServer: {
       noInfo: true //please don't spam the console when running in karma!
+    },
+    reporters: [
+      'progress',
+      'coverage',
+      // 'threshold',
+    ],
+    coverageReporter: {
+      dir: __dirname + '/coverage',
+      reporters: [
+        {type: 'html', subdir: 'report-html'},
+        {type: 'cobertura', subdir: 'cobertura/', file: 'cobertura.txt'},
+      ],
     }
-    , reporters: [
-        'progress'
-      , 'coverage'
-      , 'threshold'
-    ]
-    , coverageReporter: {
-      dir: __dirname + '/coverage'
-      , reporters: [
-          {type: 'html', subdir: 'report-html'}
-        , {type: 'cobertura', subdir: 'cobertura/', file: 'cobertura.txt'}
-      ]
-    }
-    , thresholdReporter: {
-        statements: 100
-      , branches: 100
-      , functions: 100
-      , lines: 100
+    thresholdReporter: {
+      statements: 100,
+      branches: 100,
+      functions: 100,
+      lines: 100,
     }
     //, junitReporter: {
     //    outputFile: '.tmp/karma-test-results.xml'
     //  , suite: ''
     //}
-    , port: 9876
-    , colors: true
-    // , logLevel: config.LOG_DEBUG
-    , logLevel: config.LOG_INFO
-
-    , autoWatch: true
-    , singleRun: true
-    , browsers: ['PhantomJS']
+    port: 9876,
+    colors: true,
+    // logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
+    autoWatch: true,
+    singleRun: true,
+    browsers: ['PhantomJS'],
   });
 };

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 
-const exportFn = () => {
+const exportFn = (): Function => {
   const Component = (props) => {
     const html = (
       <div data-id="<%= kabobName %>"></div>
