@@ -12,13 +12,13 @@ module.exports = generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('container.js'),
       this.destinationPath('client/containers/' + implFileName),
-      { containerName: kabobName }
+      { containerName: kabobName, kabobName }
     );
 
     this.fs.copyTpl(
       this.templatePath('container.spec.js'),
       this.destinationPath('client/containers/' + testFileName),
-      { containerName: kabobName }
+      { containerName: kabobName, kabobName }
     );
   },
 });
