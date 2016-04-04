@@ -4,7 +4,7 @@
   "description": "description",
   "repository": "",
   "scripts": {
-    "build": "mkdir -p ./dist && cp client/index.html dist/index.html && webpack client/app/index.js",
+    "build": "mkdir -p ./dist && cp client/index.html dist/index.html && webpack client/index.js",
     "test": "karma start",
     "bs": "node browser-sync.js",
     "test-watch": "karma start --no-single-run karma.conf.js",
