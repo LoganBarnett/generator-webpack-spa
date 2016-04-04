@@ -10,7 +10,7 @@ const exportFn = () => {
 
   const mapDispatch = () => ({});
 
-  const mapStateToProps => (state) => {
+  const mapStateToProps = (state) => {
     const newState = {};
 
     return newState;
