@@ -1,0 +1,14 @@
+[ignore]
+.*node_modules/babel-.*
+.*node_modules/.*\.flow
+.*/node_modules/.*[^e]\.json$
+.*/node_modules/.*\(lib\|test\).*\.json$
+this-does-not-work-yet-because-reasons.*[^package]\.json$
+.*/node_modules/react(-dom)?/
+.*/node_modules/react\(-dom\)?/.*
+
+[include]
+
+[libs]
+
+[options]

@@ -12,10 +12,10 @@ describe('<%= pascalName %>', () => {
   const Component = ComponentFn();
 
   it('renders', () => {
-    const html = (
+    const html =
       <Component
       />
-    );
+    ;
     const node = renderAndFindOneByDataId('<%= kabobName %>', html);
     expect(node).not.toBe(null);
   });

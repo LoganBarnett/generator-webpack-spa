@@ -109,9 +109,10 @@ var uglifyOpts = { comments: false };
 // order is very important in here, hence the unshifts/splices/etc
 console.log('env is ' + env);
 if(env == 'DEV') {
-  devtool = '#eval-sourc-map';
+  devtool = '#eval-source-map';
   preLoaders.push(eslint);
   loaders[1].loaders.unshift('react-hot');
+  // R.find((l) => l.name == 'jsx', loaders).loaders.unshift('react-hot');
 
   entries.splice(1, 0
     , 'webpack/hot/dev-server'
@@ -121,7 +122,7 @@ if(env == 'DEV') {
   plugins.unshift(new webpack.HotModuleReplacementPlugin());
 }
 else if(env == 'TEST') {
-  devtool = '#eval-sourc-map';
+  devtool = '#eval-source-map';
 }
 else {
   devtool = 'source-map';
@@ -153,7 +154,7 @@ module.exports = {
   }
   , postcss: function() {
     var varPath =
-      path.join(__dirname, 'client', 'app', 'containers', 'vars.json');
+      path.join(__dirname, 'client', 'containers', 'vars.json');
     var vars = JSON.parse(fs.readFileSync(varPath));
     return [cssNext(vars)];
   }

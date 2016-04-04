@@ -8,7 +8,6 @@
     "test": "karma start",
     "bs": "node browser-sync.js",
     "test-watch": "karma start --no-single-run karma.conf.js",
-    "test": "karma start karma.conf.js",
     "start": "npm run bs & npm run test-watch",
     "flow-status": "flow status",
     "flow-check": "flow check",
@@ -63,6 +62,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
+    "history": "^1.17.0",
     "ramda": "^0.19.1",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
